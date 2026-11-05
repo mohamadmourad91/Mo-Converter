@@ -1,3 +1,5 @@
+> الإصدار الجديد يدعم الألمانية أيضًا. [تنزيل الإصدار والمصدر المحدّث](https://github.com/mohamadmourad91/Mo-Converter/releases/tag/v1.2.0).
+
 # Mo Converter
 
 [English](#english) | [العربية](#العربية)
