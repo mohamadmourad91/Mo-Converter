@@ -59,26 +59,23 @@ Copyright for each component belongs to its authors. Their full license texts ar
 The Windows app (`windows/` in this repository) is built with .NET and installed with an Inno Setup installer.
 Everything below is redistributable together with MoConverter under the GPL v3.
 
-### FFmpeg 8.1 — GPL v3
+### FFmpeg — GPL v3
 
-`tools\ffmpeg.exe` is the `gpl` build of FFmpeg `n8.1.3-18-g46d899d7a0` from
-[BtbN/FFmpeg-Builds](https://github.com/BtbN/FFmpeg-Builds), release `autobuild-2026-10-18-13-01`. It is configured
-with `--enable-gpl --enable-version3` and without nonfree components, so the binary as a whole is covered by the
-[GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.html). Its license text ships next to it as
-`tools\ffmpeg-LICENSE.txt`. It runs as a separate program; MoConverter calls it and does not link to it.
-
-**Corresponding source.** FFmpeg at commit `46d899d7a0` (https://github.com/FFmpeg/FFmpeg), and the build scripts
-that pin every bundled library and its version at the release tag above
-(https://github.com/BtbN/FFmpeg-Builds/tree/autobuild-2026-10-18-13-01). `windows/tools/fetch-ffmpeg.sh` downloads
-exactly these archives:
+The Windows x64 release includes `tools/ffmpeg.exe` and `tools/ffprobe.exe` from the
+[BtbN FFmpeg builds](https://github.com/BtbN/FFmpeg-Builds). The executable reports version
+`N-128406-g1fe6854fd9-20261104`, configured with `--enable-gpl --enable-version3`.
+The included license is `tools/LICENSE.txt`. The original downloaded archive was named
+`ffmpeg-master-latest-win64-gpl.zip` and had this SHA-256 digest:
 
 ```
-76f92392602b95351f4f057b8f6d74815e8c6947a2495c55193bd92f0ea7a2bd  ffmpeg-n8.1.3-18-g46d899d7a0-win64-gpl-8.1.zip
-e3e07f7ec8589b47764ef2ba20ab336bba210e62346ef6c21cca7e584b402fb1  ffmpeg-n8.1.3-18-g46d899d7a0-winarm64-gpl-8.1.zip
+469c9e1291c91d76d3cb9604835e9684ce76f0129b68081087c053d1771b47eb
 ```
 
-If you received MoConverter as a binary and cannot reach these addresses, open an issue in this repository and the
-same sources will be provided.
+FFmpeg source: https://github.com/FFmpeg/FFmpeg/tree/1fe6854fd9
+
+Build scripts and component sources: https://github.com/BtbN/FFmpeg-Builds
+
+The `latest` download changes over time; it must not be treated as an immutable copy of this archive.
 
 ### Libraries
 
