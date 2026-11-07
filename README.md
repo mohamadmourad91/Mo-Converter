@@ -1,5 +1,3 @@
-> الإصدار الجديد يدعم الألمانية أيضًا. [تنزيل الإصدار والمصدر المحدّث](https://github.com/mohamadmourad91/Mo-Converter/releases/tag/v1.2.0).
-
 # Mo Converter
 
 [English](#english) | [العربية](#العربية)
@@ -17,7 +15,7 @@ Mo Converter is a Windows application for converting, compressing and editing fi
 - **Documents and spreadsheets:** Convert supported documents, spreadsheets and presentations between available formats. Some conversions require Microsoft Office, LibreOffice or WebView2.
 - **Archives and subtitles:** Extract or create supported archives and convert supported subtitle formats.
 - **QR codes and file shelf:** Create QR codes and keep files handy on a floating shelf.
-- **Languages:** Arabic and English interfaces, with language and shortcut settings.
+- **Languages:** Arabic, English and German interfaces, with language and shortcut settings.
 
 Available actions and output formats depend on the selected file. Some image and text recognition features depend on Windows capabilities and installed language support.
 
@@ -46,9 +44,9 @@ Alt    — Actions
 
 3. Drop the file onto an option. Change shortcuts, language and output preferences in the application settings.
 
-### Source and license
+### License
 
-The [source archive](Mo-Converter-source-final.zip) and [license](LICENSE) are available in this repository. Third-party notices are listed separately in [this file](THIRD-PARTY-NOTICES.md).
+See the [license](LICENSE) and [third-party notices](THIRD-PARTY-NOTICES.md).
 
 ---
 
@@ -65,7 +63,7 @@ The [source archive](Mo-Converter-source-final.zip) and [license](LICENSE) are a
 - **المستندات والجداول:** تحويل المستندات والجداول والعروض المدعومة بين الصيغ المتاحة. تحتاج بعض التحويلات إلى برامج مكتبية أو مكوّن عرض صفحات الويب.
 - **الملفات المضغوطة والترجمة النصية:** استخراج الأرشيفات المدعومة أو إنشاؤها، وتحويل صيغ الترجمة المدعومة.
 - **رموز الاستجابة السريعة ورف الملفات:** إنشاء الرموز والاحتفاظ بالملفات في رف عائم لتسهيل الوصول إليها.
-- **اللغات:** واجهة عربية وإنجليزية، مع إعدادات لتغيير اللغة والاختصارات.
+- **اللغات:** واجهة عربية وإنجليزية وألمانية، مع إعدادات لتغيير اللغة والاختصارات.
 
 تختلف العمليات وصيغ الإخراج المتاحة بحسب الملف المحدد. وتعتمد بعض ميزات التعرّف على الصور والنصوص على إمكانات ويندوز واللغات المثبّتة.
 
@@ -96,6 +94,24 @@ Alt    — Actions
 
 3. أفلت الملف على الخيار المطلوب. يمكنك تغيير المفاتيح واللغة ومكان حفظ النتائج من إعدادات البرنامج.
 
-### المصدر والترخيص
+### الترخيص
 
-يتوفر [ملف المصدر المضغوط](Mo-Converter-source-final.zip) و[الترخيص](LICENSE) في هذا المستودع، إلى جانب [إشعارات المكونات الخارجية](THIRD-PARTY-NOTICES.md).
+راجع [الترخيص](LICENSE) و[إشعارات المكونات الخارجية](THIRD-PARTY-NOTICES.md).
+
+## صور البرنامج
+
+### عجلة التحويل
+
+![عجلة التحويل](wheel.png)
+
+### الواجهة العربية
+
+![الترحيب بالعربية](welcome-ar.png)
+
+### واجهة الترحيب الإنجليزية
+
+![الترحيب بالإنجليزية](welcome-en.png)
+
+### تحرير الصور
+
+![محرر الصور](editor.png)
