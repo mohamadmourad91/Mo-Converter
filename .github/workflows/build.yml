@@ -23,13 +23,20 @@ jobs:
         if: failure()
         shell: pwsh
         run: |
-          foreach ($file in Get-ChildItem TestResults -Filter *.trx -ErrorAction SilentlyContinue) {
-            [xml]$trx = Get-Content $file.FullName
-            $ns = New-Object Xml.XmlNamespaceManager($trx.NameTable)
-            $ns.AddNamespace('t', 'http://microsoft.com/schemas/VisualStudio/TeamTest/2010')
-            foreach ($r in $trx.SelectNodes("//t:UnitTestResult[@outcome='Failed']", $ns)) {
-              $message = $r.SelectSingleNode('t:Output/t:ErrorInfo/t:Message', $ns).InnerText -replace '[\r\n]+', ' | '
-              if ($message.Length -gt 600) { $message = $message.Substring(0, 600) }
-              Write-Host "::error title=$($r.testName)::$message"
+          $ErrorActionPreference = 'Continue'
+          $files = @(Get-ChildItem -Path . -Filter *.trx -Recurse -ErrorAction SilentlyContinue)
+          Write-Host "::notice::trx files found: $($files.Count)"
+          foreach ($file in $files) {
+            try {
+              [xml]$trx = Get-Content -LiteralPath $file.FullName -Raw
+              foreach ($r in @($trx.TestRun.Results.UnitTestResult | Where-Object { $_.outcome -eq 'Failed' })) {
+                $message = "$($r.Output.ErrorInfo.Message)" -replace '[\r\n]+', ' | '
+                if ($message.Length -gt 500) { $message = $message.Substring(0, 500) }
+                Write-Host "::error::FAILED $($r.testName) -- $message"
+              }
+            }
+            catch {
+              Write-Host "::error::could not read $($file.Name): $($_.Exception.Message)"
             }
           }
+          exit 0
