@@ -16,4 +16,20 @@ jobs:
         shell: pwsh
         run: ./build/get-ffmpeg.ps1
       - run: dotnet build MoConverter.slnx -c Release -warnaserror
-      - run: dotnet test MoConverter.slnx -c Release --no-build
+      - name: Test
+        run: dotnet test MoConverter.slnx -c Release --no-build --logger "trx" --results-directory TestResults
+      # The step log needs a sign-in to read; this puts each failed test on the run page as an annotation.
+      - name: Report failed tests
+        if: failure()
+        shell: pwsh
+        run: |
+          foreach ($file in Get-ChildItem TestResults -Filter *.trx -ErrorAction SilentlyContinue) {
+            [xml]$trx = Get-Content $file.FullName
+            $ns = New-Object Xml.XmlNamespaceManager($trx.NameTable)
+            $ns.AddNamespace('t', 'http://microsoft.com/schemas/VisualStudio/TeamTest/2010')
+            foreach ($r in $trx.SelectNodes("//t:UnitTestResult[@outcome='Failed']", $ns)) {
+              $message = $r.SelectSingleNode('t:Output/t:ErrorInfo/t:Message', $ns).InnerText -replace '[\r\n]+', ' | '
+              if ($message.Length -gt 600) { $message = $message.Substring(0, 600) }
+              Write-Host "::error title=$($r.testName)::$message"
+            }
+          }
