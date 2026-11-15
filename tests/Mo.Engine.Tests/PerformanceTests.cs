@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using ImageMagick;
 using Mo.Engine.Media;
 using PdfSharp.Drawing;
@@ -48,7 +48,7 @@ public sealed class PerformanceFixture : IDisposable
             var font = new XFont("Arial", 11);
             for (var p = 1; p <= PdfPages; p++)
             {
-                var page = document.AddPage();
+                var page = document.AddPage(); page.Size = PdfSharp.PageSize.A4; // not the culture default (Letter on a US PC)
                 using var gfx = XGraphics.FromPdfPage(page);
                 gfx.DrawString($"Seite {p}", new XFont("Arial", 20, XFontStyleEx.Bold), XBrushes.Black, 72, 80);
                 for (var line = 0; line < 40; line++)

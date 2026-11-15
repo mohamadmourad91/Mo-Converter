@@ -49,7 +49,7 @@ public sealed class ReportFixture : IDisposable
         {
             document.Info.Title = Title;
             var body = Font(11);
-            var page = document.AddPage();
+            var page = document.AddPage(); page.Size = PdfSharp.PageSize.A4; // not the culture default (Letter on a US PC)
             using (var gfx = XGraphics.FromPdfPage(page))
             {
                 gfx.DrawString(Title, Font(24, XFontStyleEx.Bold), XBrushes.Black, 72, 90);
@@ -78,7 +78,7 @@ public sealed class ReportFixture : IDisposable
                 gfx.DrawString("Ende der ersten Seite.", body, XBrushes.Black, 72, 500);
             }
 
-            page = document.AddPage();
+            page = document.AddPage(); page.Size = PdfSharp.PageSize.A4; // not the culture default (Letter on a US PC)
             using (var gfx = XGraphics.FromPdfPage(page))
             {
                 gfx.DrawString("Ausblick", Font(16, XFontStyleEx.Bold), XBrushes.Black, 72, 90);
@@ -91,7 +91,7 @@ public sealed class ReportFixture : IDisposable
         TextOnly = Path.Combine(Folder, "letter.pdf");
         using (var document = new PdfDocument())
         {
-            var page = document.AddPage();
+            var page = document.AddPage(); page.Size = PdfSharp.PageSize.A4; // not the culture default (Letter on a US PC)
             using var gfx = XGraphics.FromPdfPage(page);
             gfx.DrawString("Sehr geehrte Damen und Herren,", Font(11), XBrushes.Black, 72, 100);
             gfx.DrawString("vielen Dank für Ihre Anfrage.", Font(11), XBrushes.Black, 72, 140);
@@ -102,7 +102,7 @@ public sealed class ReportFixture : IDisposable
         PhotoOnly = Path.Combine(Folder, "scan.pdf");
         using (var document = new PdfDocument())
         {
-            var page = document.AddPage();
+            var page = document.AddPage(); page.Size = PdfSharp.PageSize.A4; // not the culture default (Letter on a US PC)
             using var gfx = XGraphics.FromPdfPage(page);
             using var picture = XImage.FromFile(photo);
             gfx.DrawImage(picture, 0, 0, page.Width.Point, page.Height.Point);
@@ -113,7 +113,7 @@ public sealed class ReportFixture : IDisposable
         Protected = Path.Combine(Folder, "locked.pdf");
         using (var document = new PdfDocument())
         {
-            var page = document.AddPage();
+            var page = document.AddPage(); page.Size = PdfSharp.PageSize.A4; // not the culture default (Letter on a US PC)
             using (var gfx = XGraphics.FromPdfPage(page)) gfx.DrawString("Geheim", Font(11), XBrushes.Black, 72, 100);
             document.SecuritySettings.UserPassword = "geheim";
             document.Save(Protected);

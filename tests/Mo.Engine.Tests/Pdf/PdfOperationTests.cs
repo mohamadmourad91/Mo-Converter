@@ -1,4 +1,4 @@
-﻿using ImageMagick;
+using ImageMagick;
 using PdfSharp.Drawing;
 using PdfSharp.Fonts;
 using PdfSharp.Pdf;
@@ -46,7 +46,7 @@ public sealed class PdfFixture : IDisposable
         PhotoOnly = Path.Combine(Folder, "photo.pdf");
         using (var document = new PdfDocument())
         {
-            var page = document.AddPage();
+            var page = document.AddPage(); page.Size = PdfSharp.PageSize.A4; // not the culture default (Letter on a US PC)
             using var gfx = XGraphics.FromPdfPage(page);
             using var picture = XImage.FromFile(photo);
             gfx.DrawImage(picture, 0, 0, page.Width.Point, page.Height.Point);
@@ -67,7 +67,7 @@ public sealed class PdfFixture : IDisposable
         var font = new XFont("Arial", 28);
         for (var i = 1; i <= pages; i++)
         {
-            var page = document.AddPage();
+            var page = document.AddPage(); page.Size = PdfSharp.PageSize.A4; // not the culture default (Letter on a US PC)
             using var gfx = XGraphics.FromPdfPage(page);
             gfx.DrawString($"Page {i}", font, XBrushes.Black, new XPoint(72, 120));
             gfx.DrawString("Mo Converter", font, XBrushes.DarkBlue, new XPoint(72, 180));
