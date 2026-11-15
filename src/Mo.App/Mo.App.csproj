@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>Mo Converter</AssemblyName>
+    <RootNamespace>Mo.App</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- The icon of Mo Converter.exe, the taskbar and the installer (Assets\app-source.png is its source). -->
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <!-- Program.Main runs Velopack's install/update hooks before WPF starts. -->
+    <StartupObject>Mo.App.Program</StartupObject>
+    <!-- WPF0001: the Fluent ThemeMode API is still marked experimental; it is used only for the settings window. -->
+    <NoWarn>$(NoWarn);WPF0001</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- WithCulture=false keeps app.en/de/ar.json in the main assembly instead of satellite assemblies. -->
+    <EmbeddedResource Include="Locales\*.json" WithCulture="false" />
+    <ProjectReference Include="..\Mo.Engine\Mo.Engine.csproj" />
+    <!-- WPF leaves System.IO out of the implicit usings (Path clashes with Shapes.Path); none of our files use Shapes. -->
+    <Using Include="System.IO" />
+    <InternalsVisibleTo Include="Mo.App.Tests" />
+    <InternalsVisibleTo Include="Mo.Shots" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- MIT licensed tray icon control. -->
+    <PackageReference Include="H.NotifyIcon.Wpf" Version="2.4.1" />
+    <!-- MIT licensed installer and updater; releases come from GitHub. -->
+    <PackageReference Include="Velopack" Version="1.2.161" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The license and the list of third-party software travel with every build (the LGPL asks for it). -->
+    <None Include="..\..\LICENSE" Link="LICENSE.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Visible="false" />
+    <None Include="..\..\THIRD-PARTY-NOTICES.md" Link="THIRD-PARTY-NOTICES.md" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Visible="false" />
+  </ItemGroup>
+  <Import Project="..\..\build\Ffmpeg.props" />
+</Project>

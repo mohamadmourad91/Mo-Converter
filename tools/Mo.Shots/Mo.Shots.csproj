@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Developer tool: renders the app's UI to high-resolution PNGs for README, store listing and videos. Not shipped. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <UseWPF>true</UseWPF>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Mo.Shots</RootNamespace>
+    <NoWarn>$(NoWarn);WPF0001</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Mo.App\Mo.App.csproj" />
+    <ProjectReference Include="..\..\src\Mo.Engine\Mo.Engine.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Mo.App/Mo.App.csproj" />
+    <Project Path="src/Mo.Cli/Mo.Cli.csproj" />
+    <Project Path="src/Mo.Engine/Mo.Engine.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/Mo.Shots/Mo.Shots.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Mo.App.Tests/Mo.App.Tests.csproj" />
+    <Project Path="tests/Mo.Cli.Tests/Mo.Cli.Tests.csproj" />
+    <Project Path="tests/Mo.Engine.Tests/Mo.Engine.Tests.csproj" />
+  </Folder>
+</Solution>

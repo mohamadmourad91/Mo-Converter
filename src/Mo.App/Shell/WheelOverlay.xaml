@@ -1,0 +1,35 @@
+<Window x:Class="Mo.App.Shell.WheelOverlay"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:Mo.App.Shell"
+        x:ClassModifier="internal"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        Topmost="True"
+        ResizeMode="NoResize"
+        Focusable="False"
+        AllowDrop="True"
+        FlowDirection="LeftToRight"
+        Width="{x:Static shell:WheelOverlay.WindowSize}"
+        Height="{x:Static shell:WheelOverlay.WindowSize}">
+    <!-- The near-invisible background (alpha 1) keeps the whole window hit-testable, so OLE delivers
+         drag events to it; a fully transparent layered window would let the drag fall through.
+         The area around the wheel is a cancel zone: dropping there does nothing. -->
+    <Grid x:Name="Root" Background="#01000000">
+        <shell:WheelView x:Name="Wheel"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Opacity="0"
+                         RenderTransformOrigin="0.5,0.5">
+            <shell:WheelView.RenderTransform>
+                <ScaleTransform x:Name="WheelScale" ScaleX="0.86" ScaleY="0.86" />
+            </shell:WheelView.RenderTransform>
+            <shell:WheelView.Effect>
+                <DropShadowEffect BlurRadius="26" ShadowDepth="5" Direction="270" Opacity="0.30" Color="#000000" />
+            </shell:WheelView.Effect>
+        </shell:WheelView>
+    </Grid>
+</Window>

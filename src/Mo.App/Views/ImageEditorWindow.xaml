@@ -1,0 +1,96 @@
+<Window x:Class="Mo.App.Views.ImageEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:v="clr-namespace:Mo.App.Views"
+        Width="1100" Height="760" MinWidth="760" MinHeight="540"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="{StaticResource Mo.TextFont}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="310" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- The picture. Drawing always happens in picture coordinates, whatever the zoom or turn. -->
+        <Border Margin="16,16,8,8" CornerRadius="10" Background="{DynamicResource Mo.Wheel.Plate}">
+            <Viewbox Stretch="Uniform" Margin="14" FlowDirection="LeftToRight">
+                <Grid x:Name="Stage">
+                    <Grid.LayoutTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="Mirror" />
+                            <RotateTransform x:Name="Turn" />
+                        </TransformGroup>
+                    </Grid.LayoutTransform>
+                    <Image x:Name="Picture" Stretch="Fill" />
+                    <Canvas x:Name="Overlay" Background="Transparent" Cursor="Cross"
+                            MouseLeftButtonDown="OnDrawStart" MouseMove="OnDrawMove" MouseLeftButtonUp="OnDrawEnd">
+                        <Path x:Name="Dim" Fill="#99000000" IsHitTestVisible="False" />
+                        <Rectangle x:Name="CropFrame" Stroke="White" StrokeThickness="3" StrokeDashArray="3 2" IsHitTestVisible="False" Visibility="Collapsed" />
+                        <Rectangle x:Name="Rubber" Stroke="{DynamicResource Mo.Accent}" StrokeThickness="3" IsHitTestVisible="False" Visibility="Collapsed" />
+                    </Canvas>
+                </Grid>
+            </Viewbox>
+        </Border>
+
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Margin="8,16,16,8">
+            <StackPanel>
+                <TextBlock Style="{StaticResource Mo.SectionTitle}" Text="{v:T editor.section.area}" Margin="0,0,0,8" />
+                <Border Style="{StaticResource Mo.Card}">
+                    <StackPanel>
+                        <RadioButton GroupName="Mode" Content="{v:T editor.mode.crop}" IsChecked="{Binding IsCropMode}" />
+                        <RadioButton GroupName="Mode" Content="{v:T editor.mode.hide}" IsChecked="{Binding IsHideMode}" Margin="0,4,0,0" />
+                        <TextBlock x:Name="ModeHint" Style="{StaticResource Mo.Hint}" Margin="0,8,0,0" />
+                        <CheckBox Content="{v:T editor.style.black}" IsChecked="{Binding BlackBars}" Margin="0,8,0,0" />
+                        <Button Content="{v:T editor.undo}" Command="{Binding UndoCommand}" HorizontalAlignment="Left" Margin="0,8,0,0" Padding="12,4" />
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Style="{StaticResource Mo.SectionTitle}" Text="{v:T editor.section.turn}" Margin="0,16,0,8" />
+                <Border Style="{StaticResource Mo.Card}">
+                    <UniformGrid Columns="2">
+                        <Button Margin="0,0,4,4" Padding="8,6" Command="{Binding RotateLeftCommand}" ToolTip="{v:T editor.rotate-left}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE7AD;" FontFamily="{StaticResource Mo.IconFont}" Margin="0,2,6,0">
+                                    <TextBlock.LayoutTransform><ScaleTransform ScaleX="-1" /></TextBlock.LayoutTransform>
+                                </TextBlock>
+                                <TextBlock Text="{v:T editor.rotate-left}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Margin="4,0,0,4" Padding="8,6" Command="{Binding RotateRightCommand}" ToolTip="{v:T editor.rotate-right}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE7AD;" FontFamily="{StaticResource Mo.IconFont}" Margin="0,2,6,0" />
+                                <TextBlock Text="{v:T editor.rotate-right}" />
+                            </StackPanel>
+                        </Button>
+                        <ToggleButton Margin="0,4,4,0" Padding="8,6" IsChecked="{Binding FlipHorizontal}" Content="{v:T editor.flip-h}" />
+                        <ToggleButton Margin="4,4,0,0" Padding="8,6" IsChecked="{Binding FlipVertical}" Content="{v:T editor.flip-v}" />
+                    </UniformGrid>
+                </Border>
+
+                <TextBlock Style="{StaticResource Mo.SectionTitle}" Text="{v:T editor.section.colors}" Margin="0,16,0,8" />
+                <Border Style="{StaticResource Mo.Card}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Mo.Label}" Text="{v:T editor.brightness}" />
+                        <Slider Minimum="-100" Maximum="100" Value="{Binding Brightness}" IsSnapToTickEnabled="True" TickFrequency="1" FlowDirection="LeftToRight" />
+                        <TextBlock Style="{StaticResource Mo.Label}" Text="{v:T editor.contrast}" Margin="0,8,0,0" />
+                        <Slider Minimum="-100" Maximum="100" Value="{Binding Contrast}" IsSnapToTickEnabled="True" TickFrequency="1" FlowDirection="LeftToRight" />
+                        <TextBlock Style="{StaticResource Mo.Label}" Text="{v:T editor.saturation}" Margin="0,8,0,0" />
+                        <Slider Minimum="-100" Maximum="100" Value="{Binding Saturation}" IsSnapToTickEnabled="True" TickFrequency="1" FlowDirection="LeftToRight" />
+                    </StackPanel>
+                </Border>
+
+                <Button Content="{v:T editor.reset}" Command="{Binding ResetCommand}" HorizontalAlignment="Left" Margin="0,12,0,0" Padding="12,4" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16,4,16,16">
+            <Button MinWidth="140" Padding="16,6" IsDefault="True" Style="{DynamicResource AccentButtonStyle}"
+                    Content="{v:T editor.save}" IsEnabled="{Binding HasChanges}" Click="OnSave" />
+            <Button MinWidth="110" Padding="16,6" Margin="8,0,0,0" IsCancel="True" Content="{v:T editor.cancel}" />
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,15 @@
+<Project>
+  <!--
+    Copies FFmpeg (LGPL build, see build/get-ffmpeg.ps1) into an "ffmpeg" folder next to the program.
+    FFmpeg stays a separate program with its own DLLs, as the LGPL asks; its license travels with it.
+  -->
+  <PropertyGroup>
+    <MoFfmpegDir>$(MSBuildThisFileDirectory)..\tools\ffmpeg\</MoFfmpegDir>
+  </PropertyGroup>
+  <ItemGroup Condition="Exists('$(MoFfmpegDir)bin\ffmpeg.exe')">
+    <None Include="$(MoFfmpegDir)bin\*.exe;$(MoFfmpegDir)bin\*.dll" Link="ffmpeg\%(Filename)%(Extension)"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Visible="false" />
+    <None Include="$(MoFfmpegDir)LICENSE.txt" Link="ffmpeg\LICENSE.txt"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Visible="false" />
+  </ItemGroup>
+</Project>

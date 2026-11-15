@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>mo</AssemblyName>
+    <RootNamespace>Mo.Cli</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mo.Engine\Mo.Engine.csproj" />
+  </ItemGroup>
+  <Import Project="..\..\build\Ffmpeg.props" />
+</Project>

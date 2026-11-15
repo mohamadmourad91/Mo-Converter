@@ -1,0 +1,125 @@
+<Window x:Class="Mo.App.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:v="clr-namespace:Mo.App.Views"
+        Title="{v:T settings.title}"
+        Width="580" Height="700" MinWidth="460" MinHeight="420"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="{StaticResource Mo.TextFont}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Orientation="Horizontal" Margin="24,20,24,12">
+            <Border Width="36" Height="36" CornerRadius="9" Background="{DynamicResource Mo.Accent}">
+                <TextBlock Text="&#xE713;" FontFamily="{StaticResource Mo.IconFont}" FontSize="18"
+                           Foreground="{DynamicResource Mo.AccentText}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+            <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                <TextBlock Text="{v:T settings.heading}" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource Mo.Text}" />
+                <TextBlock Text="{v:T app.name}" FontSize="12" Foreground="{DynamicResource Mo.SubtleText}" />
+            </StackPanel>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="24,0,24,8">
+            <StackPanel>
+                <!-- Wheels -->
+                <TextBlock Style="{StaticResource Mo.SectionTitle}" Text="{v:T settings.section.wheels}" />
+                <Border Style="{StaticResource Mo.Card}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Mo.Hint}" Margin="0,0,0,10" Text="{v:T settings.wheels.hint}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="160" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Style="{StaticResource Mo.Label}" Text="{v:T settings.key.convert}" />
+                            <ComboBox Grid.Column="1" Margin="0,4" ItemsSource="{Binding Keys}" DisplayMemberPath="Label"
+                                      SelectedValuePath="Value" SelectedValue="{Binding ConvertKey}" />
+                            <TextBlock Grid.Row="1" Style="{StaticResource Mo.Label}" Text="{v:T settings.key.tools}" />
+                            <ComboBox Grid.Row="1" Grid.Column="1" Margin="0,4" ItemsSource="{Binding Keys}" DisplayMemberPath="Label"
+                                      SelectedValuePath="Value" SelectedValue="{Binding ToolsKey}" />
+                            <TextBlock Grid.Row="2" Style="{StaticResource Mo.Label}" Text="{v:T settings.key.actions}" />
+                            <ComboBox Grid.Row="2" Grid.Column="1" Margin="0,4" ItemsSource="{Binding Keys}" DisplayMemberPath="Label"
+                                      SelectedValuePath="Value" SelectedValue="{Binding ActionsKey}" />
+                        </Grid>
+                        <TextBlock Style="{StaticResource Mo.Hint}" Margin="0,8,0,0" Text="{v:T settings.wheels.distinct}" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Output -->
+                <TextBlock Style="{StaticResource Mo.SectionTitle}" Text="{v:T settings.section.output}" />
+                <Border Style="{StaticResource Mo.Card}">
+                    <StackPanel>
+                        <RadioButton GroupName="Output" Margin="0,2" Content="{v:T settings.output.next-to}" IsChecked="{Binding UseNextToOriginal}" />
+                        <RadioButton GroupName="Output" Margin="0,2" Content="{v:T settings.output.folder}" IsChecked="{Binding UseFolder}" />
+                        <Grid Margin="28,6,0,0" IsEnabled="{Binding UseFolder}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding OutputFolder, UpdateSourceTrigger=PropertyChanged}" FlowDirection="LeftToRight" VerticalContentAlignment="Center" />
+                            <Button Grid.Column="1" Margin="8,0,0,0" Padding="14,5" Content="{v:T settings.output.browse}" Command="{Binding BrowseCommand}" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- General -->
+                <TextBlock Style="{StaticResource Mo.SectionTitle}" Text="{v:T settings.section.general}" />
+                <Border Style="{StaticResource Mo.Card}">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="200" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Style="{StaticResource Mo.Label}" Text="{v:T settings.theme}" />
+                            <ComboBox Grid.Column="1" Margin="0,4" ItemsSource="{Binding Themes}" DisplayMemberPath="Label"
+                                      SelectedValuePath="Value" SelectedValue="{Binding Theme}" />
+                            <TextBlock Grid.Row="1" Style="{StaticResource Mo.Label}" Text="{v:T settings.language}" />
+                            <ComboBox Grid.Row="1" Grid.Column="1" Margin="0,4" ItemsSource="{Binding Languages}" DisplayMemberPath="Label"
+                                      SelectedValuePath="Value" SelectedValue="{Binding Language}" />
+                        </Grid>
+                        <TextBlock Style="{StaticResource Mo.Hint}" Text="{v:T settings.language.hint}"
+                                   Visibility="{Binding LanguageChanged, Converter={StaticResource BoolToVisibility}}" />
+                        <Separator Style="{StaticResource Mo.Divider}" />
+                        <CheckBox Margin="0,2" Content="{v:T settings.sounds}" IsChecked="{Binding PlaySounds}" />
+                        <CheckBox Margin="0,2" Content="{v:T settings.startup}" IsChecked="{Binding StartWithWindows}" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Footer -->
+        <Grid Grid.Row="2" Margin="24,8,24,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource Mo.Label}" Foreground="#FFD13438" Margin="0,0,12,0" Text="{Binding Error}"
+                       Visibility="{Binding HasError, Converter={StaticResource BoolToVisibility}}" />
+            <Button Grid.Column="1" MinWidth="110" Padding="16,6" Margin="0,0,8,0" IsDefault="True"
+                    Style="{DynamicResource AccentButtonStyle}"
+                    Content="{v:T settings.save}" Command="{Binding SaveCommand}" />
+            <Button Grid.Column="2" MinWidth="110" Padding="16,6" IsCancel="True"
+                    Content="{v:T settings.cancel}" Command="{Binding CancelCommand}" />
+        </Grid>
+    </Grid>
+</Window>

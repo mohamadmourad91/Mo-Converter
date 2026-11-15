@@ -1,0 +1,38 @@
+<Window x:Class="Mo.App.Views.WelcomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:v="clr-namespace:Mo.App.Views"
+        Title="{v:T welcome.title}"
+        Width="560" SizeToContent="Height"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        FontFamily="{StaticResource Mo.TextFont}">
+    <StackPanel Margin="26,24,26,20">
+        <StackPanel Orientation="Horizontal">
+            <Border Width="44" Height="44" CornerRadius="10" Background="{DynamicResource Mo.Accent}">
+                <TextBlock Text="&#xE8B7;" FontFamily="{StaticResource Mo.IconFont}" FontSize="22"
+                           Foreground="{DynamicResource Mo.AccentText}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+            <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                <TextBlock Text="{v:T welcome.heading}" FontSize="22" FontWeight="SemiBold" Foreground="{DynamicResource Mo.Text}" />
+                <TextBlock Text="{v:T welcome.subheading}" Foreground="{DynamicResource Mo.SubtleText}" TextWrapping="Wrap" />
+            </StackPanel>
+        </StackPanel>
+
+        <TextBlock x:Name="KeysText" Margin="0,18,0,8" TextWrapping="Wrap" FontSize="14" Foreground="{DynamicResource Mo.Text}" />
+
+        <Border Style="{StaticResource Mo.Card}" Margin="0,8,0,0">
+            <StackPanel>
+                <TextBlock Text="{v:T welcome.step1}" Margin="0,0,0,8" TextWrapping="Wrap" />
+                <TextBlock Text="{v:T welcome.step2}" Margin="0,0,0,8" TextWrapping="Wrap" />
+                <TextBlock Text="{v:T welcome.step3}" Margin="0,0,0,8" TextWrapping="Wrap" />
+                <TextBlock Text="{v:T welcome.step4}" TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+
+        <Grid Margin="0,22,0,0">
+            <CheckBox x:Name="DontShow" Content="{v:T welcome.dont-show}" VerticalAlignment="Center" />
+            <Button HorizontalAlignment="Right" MinWidth="120" Padding="16,6" IsDefault="True" IsCancel="True"
+                    Style="{DynamicResource AccentButtonStyle}" Content="{v:T welcome.close}" Click="OnClose" />
+        </Grid>
+    </StackPanel>
+</Window>

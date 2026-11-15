@@ -1,0 +1,19 @@
+name: build
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    # Windows: the program uses WPF, the Windows PDF renderer and Windows text recognition.
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      # The video and audio tests run the real FFmpeg (pinned LGPL build, checksum-verified).
+      - name: Fetch FFmpeg
+        shell: pwsh
+        run: ./build/get-ffmpeg.ps1
+      - run: dotnet build MoConverter.slnx -c Release -warnaserror
+      - run: dotnet test MoConverter.slnx -c Release --no-build

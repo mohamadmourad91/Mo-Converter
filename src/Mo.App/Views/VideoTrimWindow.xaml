@@ -1,0 +1,60 @@
+<Window x:Class="Mo.App.Views.VideoTrimWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:v="clr-namespace:Mo.App.Views"
+        Width="920" Height="680" MinWidth="620" MinHeight="460"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="{StaticResource Mo.TextFont}">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border CornerRadius="10" Background="Black" ClipToBounds="True">
+            <MediaElement x:Name="Player" LoadedBehavior="Manual" UnloadedBehavior="Close" ScrubbingEnabled="True" Stretch="Uniform" />
+        </Border>
+
+        <Border Grid.Row="1" Style="{StaticResource Mo.Card}" Margin="0,12,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource Mo.Label}" Text="{v:T trim.start}" MinWidth="60" />
+                <Slider Grid.Column="1" x:Name="StartSlider" Minimum="0" Maximum="{Binding Duration, Mode=OneTime}" Value="{Binding Start}"
+                        FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="8,0" />
+                <TextBlock Grid.Column="2" Text="{Binding StartText}" MinWidth="70" VerticalAlignment="Center" Foreground="{DynamicResource Mo.Text}" FontFamily="Consolas" />
+                <TextBlock Grid.Row="1" Style="{StaticResource Mo.Label}" Text="{v:T trim.end}" />
+                <Slider Grid.Row="1" Grid.Column="1" x:Name="EndSlider" Minimum="0" Maximum="{Binding Duration, Mode=OneTime}" Value="{Binding End}"
+                        FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="8,6,8,0" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding EndText}" VerticalAlignment="Center" Foreground="{DynamicResource Mo.Text}" FontFamily="Consolas" />
+                <TextBlock Grid.Row="2" Grid.ColumnSpan="3" Style="{StaticResource Mo.Hint}" Margin="0,10,0,0" Text="{v:T trim.hint}" />
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2" Margin="0,12,0,0">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="PlayButton" Padding="14,6" Click="OnPlay">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="PlayGlyph" Text="&#xE768;" FontFamily="{StaticResource Mo.IconFont}" Margin="0,2,8,0" />
+                        <TextBlock x:Name="PlayText" Text="{v:T trim.play}" />
+                    </StackPanel>
+                </Button>
+                <TextBlock Text="{Binding LengthText}" VerticalAlignment="Center" Margin="16,0,0,0" Foreground="{DynamicResource Mo.SubtleText}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button MinWidth="160" Padding="16,6" IsDefault="True" Style="{DynamicResource AccentButtonStyle}"
+                        Content="{v:T trim.save}" IsEnabled="{Binding HasChanges}" Click="OnSave" />
+                <Button MinWidth="110" Padding="16,6" Margin="8,0,0,0" IsCancel="True" Content="{v:T editor.cancel}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

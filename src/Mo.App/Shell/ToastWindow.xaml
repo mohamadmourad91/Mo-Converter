@@ -1,0 +1,50 @@
+<Window x:Class="Mo.App.Shell.ToastWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:ClassModifier="internal"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        Topmost="True"
+        ResizeMode="NoResize"
+        Focusable="False"
+        SizeToContent="WidthAndHeight"
+        Opacity="0">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+    </Window.Resources>
+    <!-- Margin leaves room for the shadow inside the transparent window. -->
+    <Border Margin="18" MinWidth="280" MaxWidth="460" CornerRadius="10" Padding="16,12,18,12"
+            Background="{DynamicResource Mo.Toast.Background}"
+            BorderBrush="{DynamicResource Mo.Toast.Border}" BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="4" Direction="270" Opacity="0.25" />
+        </Border.Effect>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Width="32" Height="32" VerticalAlignment="Top" Margin="0,2,12,0">
+                <Ellipse Fill="{DynamicResource Mo.Accent}" Opacity="0.14" />
+                <TextBlock Text="{Binding Glyph}" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="16"
+                           Foreground="{DynamicResource Mo.Accent}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock Text="{Binding AppName}" FontSize="11" Opacity="0.7"
+                           Foreground="{DynamicResource Mo.Text}" FontFamily="Segoe UI Variable Text, Segoe UI" />
+                <TextBlock Text="{Binding Message}" FontSize="14" TextWrapping="Wrap" Margin="0,1,0,0"
+                           Foreground="{DynamicResource Mo.Text}" FontFamily="Segoe UI Variable Text, Segoe UI" />
+                <ProgressBar Height="4" Margin="0,8,0,2" Minimum="0" Maximum="1"
+                             Value="{Binding Progress, Mode=OneWay}"
+                             IsIndeterminate="{Binding IsIndeterminate, Mode=OneWay}"
+                             Foreground="{DynamicResource Mo.Accent}" Background="{DynamicResource Mo.Toast.Track}"
+                             BorderThickness="0"
+                             Visibility="{Binding ShowProgress, Converter={StaticResource BoolToVisibility}}" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
